@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% block title %}Upload {{ type|title }} CSV - Email Warmup Portal{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <div class="flex items-center space-x-3 mb-2">
+            <div class="flex items-center justify-center w-10 h-10 bg-slate-100 rounded-lg">
+                <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                </svg>
+            </div>
+            <h2 class="text-2xl font-semibold text-slate-900">Upload {{ type|title }} CSV</h2>
+        </div>
+        <p class="text-slate-600 text-sm">Import {{ type }} email addresses in bulk using a CSV file.</p>
+    </div>
+
+    <!-- Upload Card -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+        <!-- Card Header -->
+        <div class="px-6 py-4 border-b border-gray-200 bg-slate-50">
+            <h3 class="text-sm font-medium text-slate-900">File Upload</h3>
+        </div>
+
+        <!-- Card Body -->
+        <div class="px-6 py-6">
+            <form method="post" enctype="multipart/form-data" class="space-y-6">
+                {% csrf_token %}
+                
+                <!-- File Input Section -->
+                <div>
+                    <label for="id_file" class="block text-sm font-medium text-slate-700 mb-2">
+                        Select CSV File
+                    </label>
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-slate-400 transition-colors">
+                        <div class="space-y-2 text-center">
+                            <svg class="mx-auto h-12 w-12 text-slate-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <div class="flex text-sm text-slate-600">
+                                <label for="id_file" class="relative cursor-pointer rounded-md font-medium text-slate-900 hover:text-slate-700 focus-within:outline-none">
+                                    <span>Upload a file</span>
+                                    {{ form.file }}
+                                </label>
+                                <p class="pl-1">or drag and drop</p>
+                            </div>
+                            <p class="text-xs text-slate-500">CSV files only</p>
+                        </div>
+                    </div>
+                    {% if form.file.errors %}
+                    <div class="mt-2 text-sm text-red-600">
+                        {{ form.file.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Info Box -->
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <h4 class="text-sm font-medium text-blue-800">CSV Format Requirements</h4>
+                            <div class="mt-2 text-sm text-blue-700">
+                                <ul class="list-disc list-inside space-y-1">
+                                    <li>File must be in CSV format (.csv)</li>
+                                    <li>First row should contain column headers</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="flex items-center justify-end pt-4 border-t border-gray-200">
+                    {% comment %} <a href="{% url type|add:'_mails' %}" 
+                       class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-gray-50 transition-colors duration-150">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                        Cancel
+                    </a> {% endcomment %}
+                    <button type="submit" 
+                            class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-slate-900 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-colors duration-150 shadow-sm">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                        </svg>
+                        Upload CSV
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    {% if messages %}
+    <div class="mt-6 space-y-4">
+        {% for message in messages %}
+        <div class="rounded-lg p-4 {% if message.tags == 'success' %}bg-green-50 border border-green-200{% elif message.tags == 'error' %}bg-red-50 border border-red-200{% else %}bg-blue-50 border border-blue-200{% endif %}">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    {% if message.tags == 'success' %}
+                    <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    {% elif message.tags == 'error' %}
+                    <svg class="h-5 w-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    {% else %}
+                    <svg class="h-5 w-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    {% endif %}
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm {% if message.tags == 'success' %}text-green-800{% elif message.tags == 'error' %}text-red-800{% else %}text-blue-800{% endif %}">
+                        {{ message }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Help Section -->
+    {% comment %} <div class="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-6">
+        <h3 class="text-sm font-medium text-slate-900 mb-3">Need Help?</h3>
+        <p class="text-sm text-slate-600 mb-4">
+            If you're having trouble uploading your CSV file, make sure it follows the format requirements above. 
+            You can also manually add {{ type }} emails one at a time from the {{ type|title }} Mails page.
+        </p>
+        <a href="{% url type|add:'_mails' %}" 
+           class="inline-flex items-center text-sm font-medium text-slate-700 hover:text-slate-900">
+            Go to {{ type|title }} Mails page
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+        </a>
+    </div> {% endcomment %}
+</div>
+
+<style>
+    /* Hide default file input and style the label */
+    input[type="file"] {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0,0,0,0);
+        white-space: nowrap;
+        border-width: 0;
+    }
+</style>
+
+{% endblock %}
