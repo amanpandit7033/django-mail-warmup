@@ -214,11 +214,7 @@ Before using the warmup engine, configure your Gmail account(s):
    - Select "Mail" and your device
    - Copy the 16-character password
 
-3. **Unlock CAPTCHA** (One-time)
-   - Visit: https://accounts.google.com/DisplayUnlockCaptcha
-   - Click "Continue" while logged into your Gmail account
-
-4. **Add to Database**
+3. **Add to Database**
    - Use the dashboard UI or CSV import
    - Format: `email,app_password,active`
 
