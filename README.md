@@ -147,9 +147,9 @@ graph TB
 | Model | Fields | Purpose |
 |-------|--------|---------|
 | **SenderMail** | email, app_password, status | Gmail accounts for sending |
-| **RecipientMail** | email, name, status | Recipient pool |
+| **RecipientMail** | email, status | Recipient pool |
 | **SubjectLine** | subject, status | Subject line variations |
-| **MailBody** | title, body (HTML), status | Email template library |
+| **MailBody** | body (HTML), status | Email template library |
 | **WarmupControl** | time_gap_seconds, daily_limit_per_sender, is_running | Engine configuration |
 | **MailWarmupLog** | sender, recipient, subject, body, sent_at, status | Activity tracking |
 
