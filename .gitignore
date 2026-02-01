@@ -7,7 +7,8 @@ __pycache__/
 # Virtualenv
 .venv/
 venv/
-.env
+env/
+
 
 # Django
 db.sqlite3
@@ -19,3 +20,4 @@ staticfiles/
 
 # Mac/Linux
 .DS_Store
+
