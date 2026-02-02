@@ -424,7 +424,7 @@ This tool is designed for legitimate email warmup purposes only. Users are respo
 
 For issues, questions, or contributions:
 
-- **Issues**: [GitHub Issues](https://github.com/amanpandit7033/django-email-warmup/issues)
+- **Issues**: [GitHub Issues](https://github.com/amanpandit7033/django-mail-warmup/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/amanpandit7033/django-email-warmup/discussions)
 
 ---
